@@ -265,7 +265,7 @@ InputManager:
     m_Name: crouch
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
+    negativeButton: c
     positiveButton: left ctrl
     altNegativeButton: 
     altPositiveButton: 

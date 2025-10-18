@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,13 +11,13 @@ public class PlayerController : MonoBehaviour
     public float crouchHeight = 1f;
 
 
-
     private CharacterController controller;
     private Vector3 moveDirection = Vector3.zero;
     private float gravity = 9.81f;
     private float OriginalSpeed;
     private bool IsCrouch = false;
     private float OriginalHeight;
+    
 
     public Transform cameraTransform; 
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         OriginalSpeed = speed;
 
+        OriginalHeight = GetComponent<CharacterController>().height;
         controller = GetComponent<CharacterController>();
     }
 
@@ -55,19 +57,13 @@ public class PlayerController : MonoBehaviour
         //приседание
         if (Input.GetButton("crouch"))
         {
-            IsCrouch = !IsCrouch;
-
-            if (IsCrouch == true)
-            {
-                controller.height = crouchHeight;
-                speed = CrouchSpeed;
-            }
-            else
-            {
-                controller.height = OriginalHeight;
-                speed = OriginalSpeed;
-                
-            }
+            if (!IsCrouch)
+                crouch(true);
+        }
+        else
+        {
+            if (IsCrouch)
+                crouch(false);
         }
 
 
@@ -92,5 +88,23 @@ public class PlayerController : MonoBehaviour
         //Vector3 finalMove = new Vector3(move.x, moveDirection.y, move.z);
 
         controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    private void crouch(bool crouch)
+    {
+        
+
+        IsCrouch = crouch;
+
+        if (crouch)
+        {
+            controller.height = crouchHeight;
+            speed = CrouchSpeed;
+        }
+        else
+        {
+            controller.height = OriginalHeight;
+            speed = OriginalSpeed;
+        }
     }
 }
