@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,17 +11,20 @@ public class PlayerController : MonoBehaviour
     public float CrouchSpeed = 1.0f;
     public float jumpHeight = 0.7f;
     public float crouchHeight = 1f;
-
+    public GameObject cm;
+    public float dampingCrouch = 0.3f;
+    public float dampingOriginal = 0f;
+    
 
     private CharacterController controller;
+    
     private Vector3 moveDirection = Vector3.zero;
     private float gravity = 9.81f;
     private float OriginalSpeed;
     private bool IsCrouch = false;
     private float OriginalHeight;
-    
-
-    public Transform cameraTransform; 
+    public Transform cameraTransform;
+    private CinemachineHardLockToTarget dam;
 
     void Start()
     {
@@ -27,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
         OriginalHeight = GetComponent<CharacterController>().height;
         controller = GetComponent<CharacterController>();
+        dam = GetComponentInChildren<CinemachineHardLockToTarget>();
     }
 
     void Update()
@@ -34,6 +40,7 @@ public class PlayerController : MonoBehaviour
         //DebugLog
         Debug.Log(IsCrouch);
         Debug.Log(speed);
+        Debug.Log(dam.Damping);
 
         //переменные
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -59,6 +66,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!IsCrouch)
                 crouch(true);
+            dam.Damping = controller.isGrounded ? dampingCrouch : dampingOriginal;
         }
         else
         {
@@ -66,6 +74,7 @@ public class PlayerController : MonoBehaviour
                 crouch(false);
         }
 
+        
 
         //передвижение игрока
         if (controller.isGrounded)
@@ -98,13 +107,26 @@ public class PlayerController : MonoBehaviour
 
         if (crouch)
         {
+            StartCoroutine(Clock());
             controller.height = crouchHeight;
             speed = CrouchSpeed;
         }
         else
-        {
+        {          
             controller.height = OriginalHeight;
-            speed = OriginalSpeed;
+            speed = OriginalSpeed;           
         }
     }
+    IEnumerator Clock()
+    {
+        while(true)
+        {
+            dam.Damping = dampingOriginal;
+            yield return new WaitForSeconds(2);
+        }
+        
+        
+
+    }
+
 }
