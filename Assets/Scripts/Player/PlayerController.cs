@@ -124,9 +124,6 @@ public class PlayerController : MonoBehaviour
             dam.Damping = dampingOriginal;
             yield return new WaitForSeconds(2);
         }
-        
-        
-
     }
 
 }
