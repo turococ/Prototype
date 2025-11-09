@@ -8,6 +8,7 @@ public class PlayerCrouch : MonoBehaviour
    
     private float crouchHeight = 1f;
     private float originalHeight;
+    private bool staypos;
 
     private PlayerInput input;
     private CharacterController controller;
@@ -23,7 +24,23 @@ public class PlayerCrouch : MonoBehaviour
 
     private void Update()
     {
-        controller.height = input.Crouch ? crouchHeight : originalHeight;
-        
+        if (input.Crouch)
+        {
+            controller.height = crouchHeight;
+            staypos = true;
+        }
+        else if (staypos == true)
+        {
+            controller.height = originalHeight;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        staypos = false;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        staypos = true;
     }
 }

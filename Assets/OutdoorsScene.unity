@@ -1625,11 +1625,11 @@ GameObject:
   - component: {fileID: 1480817957}
   - component: {fileID: 1480817956}
   - component: {fileID: 1480817960}
-  - component: {fileID: 1480817962}
   - component: {fileID: 1480817965}
   - component: {fileID: 1480817964}
   - component: {fileID: 1480817963}
   - component: {fileID: 1480817966}
+  - component: {fileID: 1480817967}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1729,34 +1729,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
+  m_Height: 0.92
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1480817962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480817953}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15b03b54b36296d48870536c833f8ed1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  speed: 2.5
-  runSpeed: 5.5
-  CrouchSpeed: 1
-  jumpHeight: 0.7
-  crouchHeight: 1
-  cm: {fileID: 0}
-  dampingCrouch: 0.3
-  dampingOriginal: 0
-  cameraTransform: {fileID: 1606312240}
 --- !u!114 &1480817963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1809,6 +1788,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d31adde58ebcb4c994c31701447f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
+--- !u!136 &1480817967
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480817953}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.0634172
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.527869, z: 0}
 --- !u!1 &1606312239
 GameObject:
   m_ObjectHideFlags: 0

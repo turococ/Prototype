@@ -7,14 +7,17 @@ using UnityEngine.Windows;
 public class CameraController : MonoBehaviour
 {
     private float crouchDamping = 0.3f;
+    private float runDamping = 0.1f;
     private float defaultDamping = 0f;
 
     private PlayerInput input;
     private CharacterController controller;
     private CinemachineHardLockToTarget cam;
+    private CinemachineBasicMultiChannelPerlin bobhead;
     void Start()
     {
         cam = GetComponentInChildren<CinemachineHardLockToTarget>();
+        bobhead = GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         input = GetComponent<PlayerInput>();
         controller = GetComponent<CharacterController>();
     }
@@ -25,15 +28,14 @@ public class CameraController : MonoBehaviour
         {
             cam.Damping = defaultDamping;
         }
-        else if (input.Run)
+        else if (input.Run && !input.Crouch)
         {
-            cam.Damping = defaultDamping;
+            cam.Damping = runDamping;
+            
         }
         else
         {
             cam.Damping = crouchDamping;
         }
-        //cam.Damping = !fly ? crouchDamping : defaultDamping;
-        //cam.Damping = input.Run ? defaultDamping : crouchDamping;
     }
 }

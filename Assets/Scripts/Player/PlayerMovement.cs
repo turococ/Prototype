@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = (forward * input.Move.y + right * input.Move.x);
 
-        float currentSpeed = input.Run ? runSpeed : walkSpeed;
+        float currentSpeed = input.Run && !input.Crouch ? runSpeed : walkSpeed;
         move *= currentSpeed;
 
         if (controller.isGrounded) 
