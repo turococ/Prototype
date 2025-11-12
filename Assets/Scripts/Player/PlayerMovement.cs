@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = cam.forward;
         Vector3 right = cam.right;
         forward.y  = right.y = 0;
+        forward.Normalize();
+        right.Normalize();
 
         Vector3 move = (forward * input.Move.y + right * input.Move.x);
 

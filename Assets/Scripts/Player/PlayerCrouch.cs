@@ -18,6 +18,7 @@ public class PlayerCrouch : MonoBehaviour
         
         controller = GetComponent<CharacterController>();
         input = GetComponent<PlayerInput>();
+        
 
         originalHeight = controller.height;
     }
@@ -35,12 +36,5 @@ public class PlayerCrouch : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        staypos = false;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        staypos = true;
-    }
+   
 }
