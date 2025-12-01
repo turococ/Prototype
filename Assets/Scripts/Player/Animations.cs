@@ -43,12 +43,8 @@ public class Animations : MonoBehaviour
         }
 
         //Бег
-        float speed = move.magnitude;
-        animatorLegs.SetFloat("Speed", speed);
-        animatorFull.SetFloat("Speed", speed);
+        animatorLegs.SetBool("Run", input.Run);
 
-        animatorLegs.SetBool("Run", input.Run && speed > 0.1f);
-
-        animatorLegs.SetBool("Crouch", input.Crouch);
+        animatorLegs.SetBool("Crouch", input.Crouch); //приседание
     }
 }

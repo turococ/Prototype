@@ -9,16 +9,21 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float jumpHeight;
 
+    public float currentSpeed;
+
     private CharacterController controller;
     private float verticalVelocity;
+    [SerializeField] public float impactVelocity;
     private PlayerInput input;
     private Transform cam;
+    private Body body;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         input = GetComponent<PlayerInput>();
         cam = Camera.main.transform;
+        body = GetComponent<Body>();
     }
 
     void Update()
@@ -31,7 +36,19 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = (forward * input.Move.y + right * input.Move.x);
 
-        float currentSpeed = input.Run && !input.Crouch ? runSpeed : walkSpeed;
+        currentSpeed = input.Run && !input.Crouch ? runSpeed : walkSpeed;
+
+        bool broken_LL = body.brokenLL();
+        bool broken_RL = body.brokenRL();
+
+        if (broken_LL || broken_RL)
+        {
+            currentSpeed *= 0.5f;
+        }
+        if (broken_LL && broken_RL)
+        {
+            currentSpeed *= 0.4f;
+        }
         move *= currentSpeed;
 
         if (controller.isGrounded) 
@@ -39,11 +56,15 @@ public class PlayerMovement : MonoBehaviour
             verticalVelocity = -1;
             if (input.Jump)
                 verticalVelocity = math.sqrt(jumpHeight * 2 * 9.81f);
+            impactVelocity = 0;
         }
         else
         {
             verticalVelocity -= 9.81f * Time.deltaTime;
+            impactVelocity = verticalVelocity;
         }
+
+        
 
         move.y = verticalVelocity;
         controller.Move(move * Time.deltaTime);
