@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class test : MonoBehaviour
 {
@@ -6,28 +7,42 @@ public class test : MonoBehaviour
     public Material targetMaterial;
 
     [Header("Настройки колебания")]
-    public float duration = 2f; // сколько секунд на полный цикл
-    public AnimationCurve gainCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // можно рисовать кривую в инспекторе
-    public float minGain = 0f;
-    public float maxGain = 2f;
+    public float duration = 1f;
+    public AnimationCurve gainCurve = AnimationCurve.Linear(0, 2, 1, 0);
+    public string Gainname = "_gain";
 
-    private float time = 0f;
-
-    private void Update()
+    void Start()
     {
-        if (targetMaterial == null) return;
+        if (targetMaterial != null)
+        {
+            targetMaterial.SetFloat(Gainname, gainCurve.Evaluate(0));
+        }
 
-        // нормализуем время 0..1
-        time += Time.deltaTime;
-        float t = (time % duration) / duration;
+        StartCoroutine(Pain());
+    }
 
-        // вычисляем значение по кривой
-        float curveValue = gainCurve.Evaluate(t);
+    private IEnumerator Pain()
+    {
+        float time = 0f;
 
-        // переводим 0..1 в нужный диапазон
-        float gain = Mathf.Lerp(minGain, maxGain, curveValue);
+        while (time < duration) 
+        {
+            
+             
+            float normalizedTime = time / duration;
+            float gainValue = gainCurve.Evaluate(normalizedTime);
+            targetMaterial.SetFloat(Gainname, gainValue);
+            time += Time.deltaTime;
+             
 
-        // применяем к материалу
-        targetMaterial.SetFloat("_Gain", gain);
+            /*if (targetMaterial != null)
+            {
+                targetMaterial.SetFloat(Gainname, gainCurve.Evaluate(0));
+            }*/
+
+           
+            yield return null;
+        }
+        targetMaterial.SetFloat(Gainname, 0);
     }
 }
