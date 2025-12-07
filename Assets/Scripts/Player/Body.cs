@@ -28,9 +28,12 @@ public class Body : MonoBehaviour
 {
     public float blood = 3f;
     public float bleedRate = 0.01f;
+    public bool IsPain = false;
 
     private CharacterController controller;
+    private PlayerInput input;
     private PlayerMovement move;
+    private pain Pain;
 
     public List<Limb> limbs = new List<Limb> ();
     
@@ -39,6 +42,9 @@ public class Body : MonoBehaviour
     private void Start()
     {
         controller = GetComponent<CharacterController> ();
+        input = GetComponent<PlayerInput> ();
+        move = GetComponent<PlayerMovement> ();
+        Pain = GetComponent<pain> ();
 
         foreach (var limb in limbs)
         {
@@ -50,6 +56,11 @@ public class Body : MonoBehaviour
 
     private void Update()
     {
+        if (IsPain == false && Pain.PainValue != 0)
+        {
+            Pain.PainValue = Mathf.Lerp(Pain.PainValue, 0f, 0.00025f);
+        }
+
         if (controller.isGrounded)
         {
             if (move.impactVelocity <= -14f)
@@ -64,6 +75,17 @@ public class Body : MonoBehaviour
                 blood = Mathf.Max(blood, 0);
                 blood -= Time.deltaTime * bleedRate;
             }
+        }
+
+        if (brokenLL() || brokenRL())
+        {
+            if (input.Run)
+            {
+                IsPain = true;
+                Pain.PainValue = Mathf.Lerp(Pain.PainValue, 0.5f, 0.05f);
+            }
+            else
+                IsPain = false;
         }
     }
 
