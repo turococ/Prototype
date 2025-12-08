@@ -5,31 +5,37 @@ public class SoundSystem : MonoBehaviour
 {
     public AudioClip Fall_wind;
 
+    private AudioSource audioSource;
+    private PlayerMovement move;
 
-    //flags
+    [Header("Thresholds")]
+    public float FallinVelocity = -3f;
+    public float IsGroundVelocity = -1f;
+
     private bool IsFalling;
 
-    private AudioSource audiosys;
-    private PlayerMovement move;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        audiosys = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         move = GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!IsFalling && move.impactVelocity < -3f)
+        float IV = move.impactVelocity;
+
+        if (!IsFalling && IV < FallinVelocity)
         {
-            audiosys.PlayOneShot(Fall_wind);
             IsFalling = true;
+            audioSource.clip = Fall_wind;
+            audioSource.loop = true;
+            audioSource.Play();
         }
-        if (move.impactVelocity >= -1f)
+        else if (IsFalling && IV > IsGroundVelocity)
         {
             IsFalling = false;
-            audiosys.Stop();
+            audioSource.Stop();
+            audioSource.clip = null;
         }
     }
 }
