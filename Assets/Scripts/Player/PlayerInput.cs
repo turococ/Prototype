@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
 
     private Body body;
 
-    void Start()
+    void Awake()
     {
         body = GetComponent<Body>();
     }

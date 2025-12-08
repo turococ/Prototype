@@ -14,7 +14,7 @@ public class PlayerCrouch : MonoBehaviour
     private PlayerInput input;
     private CharacterController controller;
     
-    void Start()
+    void Awake()
     {
         body = GetComponent<Body>();
         controller = GetComponent<CharacterController>();

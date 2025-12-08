@@ -10,11 +10,24 @@ public class pain : MonoBehaviour
     public float impulse = 0.3f;
     public float speed = 1f;
 
+    private int gainID;
+    private float lastValume;
+
+    private void Awake()
+    {
+        gainID = Shader.PropertyToID(Gainname);
+    }
+
     private void Update()
     {
-        float offset = Mathf.Sin(Time.time * speed) * impulse;
-        float currentValue = PainValue + offset;
+        if (targetMaterial == null) return;
 
-        targetMaterial.SetFloat(Gainname, currentValue);
+        float currentValue = PainValue + Mathf.Sin(Time.time * speed) * impulse;
+
+        if (!Mathf.Approximately(currentValue, lastValume))
+        {
+            targetMaterial.SetFloat(Gainname, currentValue);
+            lastValume = currentValue;
+        }
     }
 }

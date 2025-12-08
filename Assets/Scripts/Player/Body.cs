@@ -39,7 +39,7 @@ public class Body : MonoBehaviour
     
     public LimbUI limbUIPr;
     public Transform uiConteiner;
-    private void Start()
+    private void Awake()
     {
         controller = GetComponent<CharacterController> ();
         input = GetComponent<PlayerInput> ();
@@ -51,7 +51,6 @@ public class Body : MonoBehaviour
             LimbUI ui = Instantiate(limbUIPr, uiConteiner);
             ui.Setup(limb);
         }
-        move = GetComponent<PlayerMovement>();
     }
 
     private void Update()
