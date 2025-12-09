@@ -2,11 +2,13 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Limb
 {
     public string name;
+    public Image LimbImage;
 
     [Header("Health")]
     public float maxHealth = 20f;
@@ -37,20 +39,12 @@ public class Body : MonoBehaviour
 
     public List<Limb> limbs = new List<Limb> ();
     
-    public LimbUI limbUIPr;
-    public Transform uiConteiner;
     private void Awake()
     {
         controller = GetComponent<CharacterController> ();
         input = GetComponent<PlayerInput> ();
         move = GetComponent<PlayerMovement> ();
         Pain = GetComponent<pain> ();
-
-        foreach (var limb in limbs)
-        {
-            LimbUI ui = Instantiate(limbUIPr, uiConteiner);
-            ui.Setup(limb);
-        }
     }
 
     private void Update()
@@ -74,6 +68,8 @@ public class Body : MonoBehaviour
                 blood = Mathf.Max(blood, 0);
                 blood -= Time.deltaTime * bleedRate;
             }
+
+            UpdateColor(limb);
         }
 
         if (brokenLL() || brokenRL())
@@ -139,5 +135,22 @@ public class Body : MonoBehaviour
     public bool AreBothLegsBroken()
     {
         return brokenLL() && brokenRL();
+    }
+
+    public void UpdateColor(Limb limb)
+    {
+        if (limb.broken) 
+        {
+            limb.LimbImage.color = Color.black;
+        }
+        else if (limb.health < limb.maxHealth)
+        {
+            float damagePercent = 1f - (limb.health / limb.maxHealth);
+            limb.LimbImage.color = Color.Lerp(Color.white, Color.red, damagePercent);
+        }
+        else
+        {
+            limb.LimbImage.color = Color.white;
+        }
     }
 }
