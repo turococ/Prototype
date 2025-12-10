@@ -3005,6 +3005,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f51bd06caeaa34bae9262d962ad047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LimbUI
+  inventary: {fileID: 0}
+  camera: {fileID: 0}
 --- !u!1 &7184612189548671921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3177,6 +3179,7 @@ GameObject:
   - component: {fileID: 1248624610428041126}
   - component: {fileID: 6387655988309045006}
   - component: {fileID: 243281867368119004}
+  - component: {fileID: 7972378417764739628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3656,6 +3659,20 @@ MonoBehaviour:
   PainValue: 0
   impulse: 0.05
   speed: 4
+--- !u!114 &7972378417764739628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7526717814373116828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f51bd06caeaa34bae9262d962ad047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LimbUI
+  inventary: {fileID: 834792884436073352}
+  camera: {fileID: 6941249078028740010}
 --- !u!1 &8884430487645642948
 GameObject:
   m_ObjectHideFlags: 0
