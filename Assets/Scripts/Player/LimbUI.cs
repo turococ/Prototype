@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Cinemachine;
 
 public class LimbUI : MonoBehaviour
 {
     public GameObject inventary;
-    public Camera camera;
+    public CinemachinePanTilt camrot;
 
     private void Start()
     {
@@ -21,15 +22,15 @@ public class LimbUI : MonoBehaviour
 
             if (!isActive)
             {
-                camera.CinemachinePanTilt.enable = false;
+                camrot.enabled = false;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
             else
             {
-                camera.CinemachinePanTilt.enable = true;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                camrot.enabled = true;
             }
         }
     }
