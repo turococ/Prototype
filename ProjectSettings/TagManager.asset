@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Legs
+  - Tile
   layers:
   - Default
   - TransparentFX
