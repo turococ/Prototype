@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = forward * moveInput.y + right * moveInput.x;
 
         currentSpeed = input.Run && !input.Crouch ? runSpeed : walkSpeed;
+        currentSpeed = input.crouch ? crouchSpeed : walkSpeed;
 
         bool broken_LL = body.brokenLL();
         bool broken_RL = body.brokenRL();
