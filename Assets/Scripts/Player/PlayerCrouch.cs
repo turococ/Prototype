@@ -10,6 +10,7 @@ public class PlayerCrouch : MonoBehaviour
     private Body body;
     private PlayerInput input;
     private CharacterController controller;
+    private PlayerMovement player;
 
     float StandingHeight;
     float CurrentHeight;
@@ -18,9 +19,10 @@ public class PlayerCrouch : MonoBehaviour
 
     void Awake()
     {
-        body = GetComponent<Body>();
-        controller = GetComponent<CharacterController>();
-        input = GetComponent<PlayerInput>();
+        body = GetComponent< Body > ();
+        controller = GetComponent< CharacterController > ();
+        input = GetComponent< PlayerInput > ();
+        player = GetComponent < PlayerMovement > ();
     }
 
     void Start()
@@ -37,6 +39,7 @@ public class PlayerCrouch : MonoBehaviour
 
         if (input.Crouch || broken_LL && broken_RL)
         {
+            player.currentSpeed = player.crouchSpeed;
             float heightTarget = crouchHeight;
             CurrentHeight = Mathf.Lerp(CurrentHeight, heightTarget, crouchDelta);
             controller.height = CurrentHeight;
