@@ -12,7 +12,11 @@ public class SoundSystem : MonoBehaviour
     public AudioClip Tile2;
     public AudioClip Tile3;
 
-    public float stepDelay = 0.5f;
+    public float WalkDelay = 0.5f;
+    public float RunDelay = 0.25f;
+    public float CrouchDelay = 0.75f;
+
+    private float stepDelay;
 
     [Header("Thresholds")]
     public float FallingVelocity = -3f;
@@ -74,10 +78,15 @@ public class SoundSystem : MonoBehaviour
         }
         if (playerInput.Run)
         {
-            stepDelay = 0.2f;
+            stepDelay = RunDelay;
         }
-        else
-            stepDelay = 0.5f;
+        else if (playerInput.Crouch)
+        {
+            stepDelay = CrouchDelay;
+        }
+        else {
+            stepDelay = WalkDelay;
+        }
     }
 
     IEnumerator FootSteps()
