@@ -70,7 +70,6 @@
     <Compile Include="Assets\Scripts\Player\Animations.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Player\pain.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCrouch.cs" />
     <Compile Include="Assets\HDRP_Oak_Tree\Scripts\Oak_CameraMove.cs" />
   </ItemGroup>
