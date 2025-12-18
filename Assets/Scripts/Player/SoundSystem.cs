@@ -5,13 +5,19 @@ using UnityEngine.Audio;
 
 public class SoundSystem : MonoBehaviour
 {
+    public enum SurfaceType
+    {
+        Tile,
+        chainlink
+    }
+
     public AudioClip Fall_wind;
 
     [Header("Footsteps")]
-    public AudioClip Tile1;
-    public AudioClip Tile2;
-    public AudioClip Tile3;
+    public AudioClip[] TileSteps;
+    public AudioClip[] ChainSteps;
 
+    [Header("SoundDelay")]
     public float WalkDelay = 0.5f;
     public float RunDelay = 0.25f;
     public float CrouchDelay = 0.75f;
@@ -29,6 +35,11 @@ public class SoundSystem : MonoBehaviour
 
     private AudioSource fallSource;
     private AudioSource StepSource;
+
+    [SerializeField] private SurfaceType currentSurface;
+    [SerializeField] private LayerMask groundmask;
+
+    public float SurfaceCheckDistance = 1.2f;
 
     private bool IsFalling;
     private bool isStepping;
@@ -49,6 +60,7 @@ public class SoundSystem : MonoBehaviour
     {
         HandleFallingSound();
         HandleFootsteps();
+        DetectSurface();
     }
     void HandleFallingSound()
     {
@@ -70,22 +82,13 @@ public class SoundSystem : MonoBehaviour
     }
     void HandleFootsteps()
     {
+        stepDelay = playerInput.Run ? RunDelay : playerInput.Crouch ? CrouchDelay : WalkDelay;
+
         if (playerInput.Move.magnitude > 0.1f &&
             controller.isGrounded &&
             !isStepping)
         {
             StartCoroutine(FootSteps());
-        }
-        if (playerInput.Run)
-        {
-            stepDelay = RunDelay;
-        }
-        else if (playerInput.Crouch)
-        {
-            stepDelay = CrouchDelay;
-        }
-        else {
-            stepDelay = WalkDelay;
         }
     }
 
@@ -95,26 +98,44 @@ public class SoundSystem : MonoBehaviour
 
         while (playerInput.Move.magnitude > 0.1f && controller.isGrounded)
         {
-            int step;
+            currentSurface = DetectSurface();
+
+            AudioClip[] clips = currentSurface switch
+            {
+                SurfaceType.Tile => TileSteps,
+                SurfaceType.chainlink => ChainSteps,
+                _ => TileSteps
+            };
+
+            int index;
             do
             {
-                step = Random.Range(1, 5);
+                index = Random.Range(0, clips.Length);
             }
-            while (step == lastStep);
+            while (index == lastStep);
 
-            lastStep = step;
+            lastStep = index;
 
-            switch (step)
-            {
-                case 1: StepSource.clip = Tile1; break;
-                case 2: StepSource.clip = Tile2; break;
-                case 3: StepSource.clip = Tile3; break;
-            }
-
+            StepSource.clip = clips[index];
             StepSource.Play();
+
             yield return new WaitForSeconds(stepDelay);
         }
 
         isStepping = false;
+    }
+
+    SurfaceType DetectSurface()
+    { 
+        RaycastHit hit;
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+
+        if (Physics.Raycast(origin, Vector3.down, out hit, SurfaceCheckDistance, groundmask))
+        {
+            if (hit.collider.CompareTag("chainlink"))
+                return SurfaceType.chainlink;
+        }
+
+        return SurfaceType.Tile;
     }
 }
