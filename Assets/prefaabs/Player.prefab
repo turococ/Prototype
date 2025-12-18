@@ -1623,7 +1623,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   flipYMode: 0
   xrRendering: 1
   fullscreenPassthrough: 0
-  allowDynamicResolution: 0
+  allowDynamicResolution: 1
   customRenderingSettings: 0
   invertFaceCulling: 0
   probeLayerMask:
@@ -3552,12 +3552,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundSystem
   Fall_wind: {fileID: 8300000, guid: e47512e4bfe553c40965a79d0ee34878, type: 3}
-  Tile1: {fileID: 8300000, guid: 6f02852b8f92e15448e8ce30d95af497, type: 3}
-  Tile2: {fileID: 8300000, guid: 150bd5be50dd87349b83281eae09a95e, type: 3}
-  Tile3: {fileID: 8300000, guid: 659340b099d0b524e9ccd6ddd947f86a, type: 3}
-  stepDelay: 0.5
+  TileSteps:
+  - {fileID: 8300000, guid: 6f02852b8f92e15448e8ce30d95af497, type: 3}
+  - {fileID: 8300000, guid: 150bd5be50dd87349b83281eae09a95e, type: 3}
+  - {fileID: 8300000, guid: 659340b099d0b524e9ccd6ddd947f86a, type: 3}
+  ChainSteps:
+  - {fileID: 8300000, guid: a7e59aad6945c1e44b0f955fce8e6a32, type: 3}
+  - {fileID: 8300000, guid: 15606eee2eee6e042ad8600e6d99af07, type: 3}
+  - {fileID: 8300000, guid: ab3fba49ba307174a8dee9abb50d601c, type: 3}
+  WalkDelay: 0.5
+  RunDelay: 0.25
+  CrouchDelay: 0.75
   FallingVelocity: -3
   IsGroundVelocity: -1
+  currentSurface: 0
+  groundmask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  SurfaceCheckDistance: 1.5
 --- !u!114 &243281867368119004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3602,7 +3614,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0

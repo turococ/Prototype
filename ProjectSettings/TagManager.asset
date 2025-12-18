@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Legs
   - Tile
+  - chainlink
   layers:
   - Default
   - TransparentFX
