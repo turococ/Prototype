@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
         Jump = Input.GetButtonDown("Jump");
         Crouch = Input.GetButton("crouch");
 
-        if (body.brokenLL() && body.brokenRL())
+        if (body.brokenLL() && body.brokenRL() || Crouch)
         {
             Run = false;
         }
