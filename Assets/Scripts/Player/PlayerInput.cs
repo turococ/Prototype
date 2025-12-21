@@ -6,6 +6,8 @@ public class PlayerInput : MonoBehaviour
     public bool Jump { get; private set; }
     public bool Crouch { get; private set; }
     public bool Run { get; private set; }
+    public bool Inventory {get; private set;}
+    public bool Escape { get; private set;}
 
     private Body body;
 
@@ -19,6 +21,8 @@ public class PlayerInput : MonoBehaviour
         Move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         Jump = Input.GetButtonDown("Jump");
         Crouch = Input.GetButton("crouch");
+        Escape = Input.GetButton("Escape");
+        Inventory = Input.GetButton("Inventory");
 
         if (body.brokenLL() && body.brokenRL() || Crouch)
         {
