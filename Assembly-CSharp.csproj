@@ -61,9 +61,6 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.2.5f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
     <Compile Include="Assets\HDRP_Oak_Tree\Offer\Asset_Store_Offers.cs" />
     <Compile Include="Assets\Scripts\Player\CameraController.cs" />
     <Compile Include="Assets\Scripts\Player\SoundSystem.cs" />
@@ -103,13 +100,6 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\HDRP_Oak_Tree\Help\Quick Start.txt" />
-=======
-    <Compile Include="Assets\Scripts\Enemy\Enemy.AI.cs" />
-    <Compile Include="Assets\Scripts\Enemy\PlayerManager.cs" />
-    <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\Scripts\Enemy\trigger.cs" />
->>>>>>> 99b832917f85dd30220aca55cfd12fb96a216368
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
